@@ -1,0 +1,9 @@
+# Copy this single file to data/plugins/6789-6__dsh-voice-conversation-qq-web.yml
+# in awesome-dsh-plugin after the repository reaches the required age.
+url: https://github.com/6789-6/dsh-voice-conversation-qq-web
+name: 6789-6/dsh-voice-conversation-qq-web
+category: voice
+description:
+  en: Adds Web press-to-talk and read-aloud with configurable ASR and TTS, plus an optional allowlisted OneBot voice bridge.
+  zh: 提供可配置识别与合成服务的网页按住说话和回复朗读，并附带可选的白名单 OneBot 语音桥接。
+tarball: https://github.com/6789-6/dsh-voice-conversation-qq-web/releases/latest/download/dsh-voice-conversation.tgz

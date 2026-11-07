@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.2 — 2026-11-07
+
+- Prepared the package for public GitHub Release distribution with repository, license, and DSH peer metadata.
+- Moved the official schema package to a peer dependency and kept the standalone WebSocket runtime bundled.
+- Updated the bilingual README with a stable release download path. The npm package is not yet published.
+
 ## 0.1.1 — 2026-11-07
 
 - Added an optional generic Fish Audio TTS adapter and a complete same-page Chinese/English README.

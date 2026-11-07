@@ -18,7 +18,7 @@ On GitHub's **Code** page, click “中文 / English” below to switch language
 1. 在 Fish Audio 创建 API Key，并取得有使用权的音色 `reference_id`。将 **Fish Key、音色 ID、适配器专用令牌**分别放在仓库外三个仅服务账号可读的文件中（建议权限 `0600`）；不要提交音色样本。
 2. 安装 Node.js 24+，按 `examples/fish-tts.env.example` 设置三个 `*_FILE` 路径、`FISH_MODEL` 和 `FISH_SPEED`，运行 `node examples/fish-tts-adapter.mjs`。示例默认 `s2-pro`、语速 `0.9`，安装者可按音色调整。适配器默认只监听 `127.0.0.1:9003`；容器部署时使用受限私有网络，不能开放到公网。
 3. 先测试适配器：携带 `Authorization: Bearer <适配器令牌>` 向其 `/v1/audio/speech` 发送 `{"input":"你好，我可以发语音。","response_format":"wav"}`。成功应返回 `200`、`audio/wav`。`401` 检查适配器令牌；`502` 检查 Fish Key、音色使用权、额度、模型及网络。适配器不会记录正文或音频。
-4. 在**隔离**的 DSH `0.2.1-rc.2` 或兼容 `0.2.x` Web profile 中，运行 `npm ci --ignore-scripts && npm pack`，然后 `dsh plugin --profile web add ./dsh-voice-conversation-qq-web-0.1.1.tgz --offline`。用 `dsh --profile web --dump-config` 确认插件只有一条。包名带 `qq-web`，因为较短的 npm 名称已被其他项目占用。
+4. 从 [GitHub Release 下载预构建安装包](https://github.com/6789-6/dsh-voice-conversation-qq-web/releases/latest/download/dsh-voice-conversation.tgz)，在**隔离**的 DSH `0.2.1-rc.2` 或兼容 `0.2.x` Web profile 中运行 `dsh plugin --profile web add ./dsh-voice-conversation.tgz`。用 `dsh --profile web --dump-config` 确认插件只有一条。也可克隆仓库后运行 `npm ci --ignore-scripts && npm pack` 自行打包。此包尚未发布到 npm；包名带 `qq-web`，因为较短的 npm 名称已被其他项目占用。
 5. 按 `examples/profile-override.patch.yml` 对已安装条目做 `id` 定向配置：`ttsUrl` 指向适配器的私有地址，`ttsTokenFile` 指向其专用令牌文件；`asrUrl` 和 `asrTokenFile` 指向**独立的识别服务**。ASR 必须接受 `POST audio/wav` 并返回 `{"text":"识别内容"}`。Fish 在本路线只负责合成，不能代替 ASR。不要再应用手动 `insert` 示例补丁。
 6. 重启隔离 DSH，在已认证的网页选择工作区，按住 🎤、松开，确认转写进入草稿后手动发送。对完成的助手回复点击“🔊 朗读”。音频请求走 DSH 已认证的连接通道。
 7. 可选 QQ：已有 `dsh-onebot-hub`、OneBot 和权限网关时，将可选语音桥接置于网关之后，先接模拟 OneBot 测试。按 `examples/bridge.env.example` 配置白名单私聊账号、上下游令牌和 ASR 地址；枢纽设置 `tts.provider=plugin`、`tts.plugin.tool=voice_tts`。普通回复由 Agent 选文字或语音；用户明确要求语音时应尝试 `voice_tts`，再用 `onebot_reply` 的 `record` 段发送返回的文件。`status=synthesized` 仅表示已合成，**只有发送成功回执才能说已发出**。入站 ASR 失败时桥接尝试原生转写。
@@ -32,7 +32,7 @@ On GitHub's **Code** page, click “中文 / English” below to switch language
 
 ## 开发与许可
 
-`npm ci --ignore-scripts && npm test` 运行模拟 ASR/TTS、OneBot、Fish 适配器和网页组件测试。发布前检查 `npm pack --dry-run` 与实际压缩包。代码采用 MIT 许可证；`private: true` 阻止向 npm 发布。
+`npm ci --ignore-scripts && npm test` 运行模拟 ASR/TTS、OneBot、Fish 适配器和网页组件测试。发布前检查 `npm pack --dry-run` 与实际压缩包。代码采用 MIT 许可证；公开下载由 GitHub Release 提供，npm 包尚未发布。
 
 </details>
 
@@ -46,7 +46,7 @@ On GitHub's **Code** page, click “中文 / English” below to switch language
 1. Create a Fish API key and select a voice `reference_id` you may use. Store the **Fish key, voice ID, and a separate local adapter token** in three service-only files outside this repository (for example mode `0600`). Never commit reference audio.
 2. Install Node.js 24+, set the three `*_FILE` paths plus `FISH_MODEL` and `FISH_SPEED` following `examples/fish-tts.env.example`, and run `node examples/fish-tts-adapter.mjs`. The example defaults to `s2-pro` and speed `0.9`; tune them for your voice. It binds to `127.0.0.1:9003` by default. Container deployments need a restricted private network, never a public endpoint.
 3. Test the adapter first: send `{"input":"Hello, I can speak.","response_format":"wav"}` to `/v1/audio/speech` with `Authorization: Bearer <adapter token>`. Expect `200` and `audio/wav`. A `401` points to the local token; a `502` points to Fish credentials, voice permission, balance, model, or network. The adapter does not log speech content or audio.
-4. In an **isolated** DSH `0.2.1-rc.2` or compatible `0.2.x` Web profile, run `npm ci --ignore-scripts && npm pack`, then `dsh plugin --profile web add ./dsh-voice-conversation-qq-web-0.1.1.tgz --offline`. Check `dsh --profile web --dump-config` for exactly one plugin row. The `qq-web` suffix avoids an unrelated package using the shorter npm name.
+4. Download the prebuilt package from the [GitHub Release](https://github.com/6789-6/dsh-voice-conversation-qq-web/releases/latest/download/dsh-voice-conversation.tgz). In an **isolated** DSH `0.2.1-rc.2` or compatible `0.2.x` Web profile, run `dsh plugin --profile web add ./dsh-voice-conversation.tgz`. Check `dsh --profile web --dump-config` for exactly one plugin row. You can also clone the repository and run `npm ci --ignore-scripts && npm pack`. This package is not yet on npm; the `qq-web` suffix avoids an unrelated package using the shorter npm name.
 5. Use the id-targeted `examples/profile-override.patch.yml`: set `ttsUrl` to the adapter's private URL and `ttsTokenFile` to its local token file. Point `asrUrl` and `asrTokenFile` to a **separate transcription service** accepting `POST audio/wav` and returning `{"text":"transcript"}`. Fish provides synthesis here; it is not ASR. Do not add the manual `insert` patch over the package bundle.
 6. Restart isolated DSH. In authenticated Web, select a workspace, hold and release 🎤, review the transcribed draft, and send it yourself. Click “🔊 Read aloud” on a completed assistant message. Audio stays on DSH's authenticated connection.
 7. Optional QQ: with existing `dsh-onebot-hub`, OneBot, and a permission gateway, put the optional voice bridge after the gateway and test against a mock OneBot first. Configure allowlisted private senders, both tokens, and ASR with `examples/bridge.env.example`. Set the hub's `tts.provider=plugin` and `tts.plugin.tool=voice_tts`. The Agent may choose text or speech normally. For an explicit voice request it should try `voice_tts`, then send the returned file through a `record` part in `onebot_reply`. `status=synthesized` means audio exists; **only a successful send receipt proves QQ delivery**. Failed inbound ASR falls back to native transcription.
@@ -60,6 +60,6 @@ On GitHub's **Code** page, click “中文 / English” below to switch language
 
 ## Development and license
 
-Run `npm ci --ignore-scripts && npm test` for deterministic ASR/TTS, OneBot, Fish adapter, and Web component tests. Inspect `npm pack --dry-run` and the actual tarball before publishing. MIT licensed; `private: true` prevents npm publication.
+Run `npm ci --ignore-scripts && npm test` for deterministic ASR/TTS, OneBot, Fish adapter, and Web component tests. Inspect `npm pack --dry-run` and the actual tarball before publishing. MIT licensed. GitHub Releases provide the public download; the npm package has not been published.
 
 </details>

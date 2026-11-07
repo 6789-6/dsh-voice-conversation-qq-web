@@ -1,12 +1,13 @@
 # Isolated verification report
 
-Date: 2026-11-07. Current source version: `0.1.1`. Isolated DSH verification used core package `0.1.0`; the added Fish adapter in `0.1.1` was tested locally. Target DSH: `0.2.1-rc.2`.
+Date: 2026-11-07. Current source version: `0.1.2`. Isolated DSH verification used core package `0.1.0`; the added Fish adapter was tested locally. Target DSH: `0.2.1-rc.2`.
 
 The package was developed in a separate DSH profile on an internal Docker network, with its own state, workspace, port, and resource limit. The lab had no production DSH mount, model credential, or live QQ connection.
 
 | Check | Result |
 | --- | --- |
-| Local deterministic tests (0.1.1 source) | 14 passed, 0 failed |
+| Local deterministic tests (0.1.2 source) | 14 passed, 0 failed |
+| Clean 0.1.2 tarball install | `npm install --ignore-scripts` succeeded in a temporary directory; plugin entry and configuration schema imported |
 | Isolated server DSH tests (0.1.0 core package) | 13 passed, 0 failed |
 | DSH plugin manager install | Package loaded once in the composed profile |
 | DSH plugin manager uninstall | Dependency removed from the isolated profile |
