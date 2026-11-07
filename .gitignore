@@ -1,0 +1,11 @@
+node_modules/
+*.tgz
+.playwright-cli/
+.env
+.env.*
+*.pem
+*.key
+*.wav
+*.mp3
+*.silk
+*.log

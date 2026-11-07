@@ -1,0 +1,11 @@
+# Apply in a private profile after installing the package bundle.
+# This targets the existing row; do not insert a second plugin.
+- id: dsh-voice-conversation-qq-web
+  config:
+    enabled: true
+    asrUrl: http://127.0.0.1:9002/v1/asr
+    ttsUrl: http://127.0.0.1:9003/v1/audio/speech
+    asrTokenFile: /run/secrets/asr-token
+    ttsTokenFile: /run/secrets/tts-token
+    voice: ''
+    model: ''

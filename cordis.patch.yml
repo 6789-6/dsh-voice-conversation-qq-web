@@ -1,0 +1,5 @@
+- insert:
+    - id: dsh-voice-conversation-qq-web
+      name: dsh-voice-conversation-qq-web
+      config:
+        enabled: true

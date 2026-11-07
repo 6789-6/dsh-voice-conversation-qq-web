@@ -1,0 +1,10 @@
+# Isolated lab only. Never use this example in a live profile.
+- id: ui-settings-general
+  name: "@deepseek-ai/dsh-client-ui-settings-general"
+  config:
+    welcomeNoticeVersion: 2026-09-28.1
+- id: dsh-voice-conversation-qq-web
+  config:
+    enabled: true
+    asrUrl: http://127.0.0.1:9002/asr
+    ttsUrl: http://127.0.0.1:9002/tts

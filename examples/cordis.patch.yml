@@ -1,0 +1,13 @@
+# Example for manual patch installation only. Do not also load the package bundle.
+# Set real values in the private DSH profile, never in a published package.
+- insert:
+    - id: dsh-voice-conversation-qq-web
+      name: dsh-voice-conversation-qq-web
+      config:
+        enabled: true
+        asrUrl: http://127.0.0.1:9002/v1/asr
+        ttsUrl: http://127.0.0.1:9003/v1/audio/speech
+        asrTokenFile: /run/secrets/asr-token
+        ttsTokenFile: /run/secrets/tts-token
+        voice: ''
+        model: ''

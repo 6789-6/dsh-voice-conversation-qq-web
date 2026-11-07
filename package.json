@@ -1,0 +1,60 @@
+{
+  "name": "dsh-voice-conversation-qq-web",
+  "version": "0.1.1",
+  "private": true,
+  "description": "Fish Audio TTS with optional SenseVoice ASR for DSH Web and OneBot voice conversations",
+  "type": "module",
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./client": "./src/client.js",
+    "./bridge": "./src/bridge.js"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "keywords": [
+    "dsh-plugin",
+    "deepseek-harness",
+    "voice",
+    "onebot"
+  ],
+  "dsh": {
+    "engines": {
+      "dsh": ">=0.2.1-rc.2 <0.3.0"
+    },
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-slots",
+        "@deepseek-ai/dsh-client-ui-conversation",
+        "@deepseek-ai/dsh-client-ui-chat"
+      ]
+    }
+  },
+  "dependencies": {
+    "ws": "8.18.3",
+    "@deepseek-ai/schemastery": "3.18.5"
+  },
+  "bundledDependencies": [
+    "ws",
+    "@deepseek-ai/schemastery"
+  ],
+  "files": [
+    "src",
+    "bin",
+    "cordis.patch.yml",
+    "README.md",
+    "LICENSE",
+    "examples",
+    "docs",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "test": "node --test test/*.test.mjs",
+    "bridge": "node bin/voice-bridge.js"
+  }
+}
