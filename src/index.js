@@ -5,7 +5,8 @@ import { VoiceServices, MAX_WAV_BYTES, MAX_TEXT_CHARS, speechToFile, pruneAudio 
 
 let Schema;
 let defineTool = definition => definition;
-try { Schema = (await import('@deepseek-ai/schemastery')).default; } catch {}
+try { Schema = (await import('@deepseek-ai/schemastery')).default; }
+catch { Schema = (await import('schemastery')).default; }
 try {
   const module = await import('@deepseek-ai/dsh-tools');
   if (typeof module.defineTool === 'function') defineTool = module.defineTool;
