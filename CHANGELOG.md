@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.4 — 2026-11-08
+
+- Expanded the single-page Chinese and English README into a detailed installation, Fish Audio, ASR, Web, QQ bridge, troubleshooting, and rollback guide.
+- No runtime behavior changed in this release.
+
 ## 0.1.3 — 2026-11-07
 
 - Added a bundled schema fallback so clean DSH profiles expose the plugin configuration even when the official schema peer is not present in the profile.

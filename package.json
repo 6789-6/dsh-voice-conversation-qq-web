@@ -1,6 +1,6 @@
 {
   "name": "dsh-voice-conversation-qq-web",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Fish Audio TTS with optional SenseVoice ASR for DSH Web and OneBot voice conversations",
   "license": "MIT",
   "repository": {
